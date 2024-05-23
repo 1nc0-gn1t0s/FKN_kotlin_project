@@ -34,6 +34,8 @@ fun generateRandomLogNormal(mu: Double, sigmaSquared: Double): Double {
 
 
 class MainActivity : AppCompatActivity() {
+    private val KEY_RESULT_TEXT = "result_text"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -53,12 +55,31 @@ class MainActivity : AppCompatActivity() {
             об ошибке пользователя. Иначе - считать. Выводится округленное до целых число человек,
             было бы странно, если бы Анжелика искала место, где работают 1,5 человека:).
              */
-            if (mu == "" || squaredSigma ==  "")
+            if (mu == "" || squaredSigma == "")
                 Toast.makeText(this, "Пожалуйста, заполните все окна.", Toast.LENGTH_LONG).show()
             else if (mu.toDouble() < 0.5 || squaredSigma.toDouble() < 0.5)
-                Toast.makeText(this, "Все введеные значения должны быть больше 0,5.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this,
+                    "Все введеные значения должны быть больше 0,5.",
+                    Toast.LENGTH_LONG
+                ).show()
             else
-                result.text = "Вам стоит выбрать компанию, в которой работает " + generateRandomLogNormal(mu.toDouble(), squaredSigma.toDouble()).roundToInt().toString() + " человек(а)."
+                result.text =
+                    "Вам стоит выбрать компанию, в которой работает " + generateRandomLogNormal(
+                        mu.toDouble(),
+                        squaredSigma.toDouble()
+                    ).roundToInt().toString() + " человек(а)."
         }
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val result = findViewById<TextView>(R.id.rundom_number_result)
+        outState.putString(KEY_RESULT_TEXT, result.text.toString())
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val result = findViewById<TextView>(R.id.rundom_number_result)
+        result.text = savedInstanceState.getString(KEY_RESULT_TEXT)
     }
 }
