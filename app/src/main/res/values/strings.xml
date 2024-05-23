@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FKN_kotlin_project</string>
+    <string name="count">Посчитать</string>
+    <string name="input_squared_sigma">Введите σ²</string>
+    <string name="input_mu">Введите μ</string>
+    <string name="answer">Здесь будет ответ</string>
+</resources>
